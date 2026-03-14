@@ -3,12 +3,14 @@ package com.example.di_starterapplication.data.repository
 import com.example.products_app.data.local.LocalDataSource
 import com.example.products_app.data.model.Product
 import com.example.products_app.data.remote.RemoteDataSource
+import com.example.products_app.servicelocator.ServiceLocator
 
 
 class ProductsRepositoryImpl private constructor(
-    private val remoteDataSource: RemoteDataSource,
-    private val localDataSource: LocalDataSource
+    private val serviceLocator: ServiceLocator
 ): ProductsRepository {
+    private val remoteDataSource = serviceLocator.provideProductsRemoteDataSource()
+    private val localDataSource = serviceLocator.provideProductsLocalDataSource()
 
     override suspend fun getAllProducts(isOnline: Boolean): List<Product>? {
         return if(isOnline){
@@ -29,11 +31,9 @@ class ProductsRepositoryImpl private constructor(
 
     companion object{
         private var INSTANCE : ProductsRepositoryImpl? = null
-        fun getInstance(remoteDataSource: RemoteDataSource,
-                        localDataSource: LocalDataSource
-        ): ProductsRepositoryImpl {
+        fun getInstance(serviceLocator: ServiceLocator): ProductsRepositoryImpl {
             return INSTANCE ?: synchronized(this){
-                val temp = ProductsRepositoryImpl(remoteDataSource, localDataSource)
+                val temp = ProductsRepositoryImpl(serviceLocator)
                 INSTANCE = temp
                 temp
             }

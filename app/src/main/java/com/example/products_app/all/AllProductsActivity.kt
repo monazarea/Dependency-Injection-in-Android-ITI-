@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.Scaffold
 import androidx.lifecycle.ViewModelProvider
 import com.example.di_starterapplication.data.repository.ProductsRepositoryImpl
+import com.example.products_app.ProductApplication
 import com.example.products_app.data.local.ProductsDataBase
 import com.example.products_app.data.local.ProductsLocalDataSource
 import com.example.products_app.data.remote.ProductsRemoteDataSourceImpl
@@ -17,10 +18,9 @@ class AllProductsActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 
-            val viewModel = ViewModelProvider(this, AllProductFactory(ProductsRepositoryImpl.getInstance(
-                ProductsRemoteDataSourceImpl(RetrofitHelper.service),
-                ProductsLocalDataSource(ProductsDataBase.getInstance(this@AllProductsActivity).getProductsDao())
-            )))[AllProductsViewModel::class.java]
+            val serviceLocator = (application as ProductApplication).serviceLocator
+            val viewModel = ViewModelProvider(this, AllProductFactory(serviceLocator)
+            )[AllProductsViewModel::class.java]
 
             AllProductsScreen(viewModel)
         }

@@ -1,8 +1,10 @@
 package com.example.products_app.data.local
 
 import com.example.products_app.data.model.Product
+import com.example.products_app.servicelocator.ServiceLocator
 
-class ProductsLocalDataSource(private val dao: ProductsDao) : LocalDataSource {
+class ProductsLocalDataSource(private val serviceLocator: ServiceLocator) : LocalDataSource {
+    private val dao = serviceLocator.provideProductsDao()
     override suspend fun getAllProducts(): List<Product> {
         return dao.getAllFavoriteProducts()
     }

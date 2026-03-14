@@ -8,10 +8,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.products_app.data.model.Product
 import com.example.di_starterapplication.data.repository.ProductsRepository
+import com.example.products_app.servicelocator.ServiceLocator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class AllProductsViewModel(private val repository: ProductsRepository): ViewModel() {
+class AllProductsViewModel(val serviceLocator: ServiceLocator): ViewModel() {
+    private val repository = serviceLocator.provideProductsRepository()
     private val mutableMessage : MutableLiveData<String?> = MutableLiveData("")
     val message : LiveData<String?> = mutableMessage
 
@@ -57,8 +59,8 @@ class AllProductsViewModel(private val repository: ProductsRepository): ViewMode
     }
 
 }
-class AllProductFactory(private val repository: ProductsRepository): ViewModelProvider.Factory{
+class AllProductFactory(private val serviceLocator: ServiceLocator): ViewModelProvider.Factory{
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return AllProductsViewModel(repository) as T
+        return AllProductsViewModel(serviceLocator) as T
     }
 }
