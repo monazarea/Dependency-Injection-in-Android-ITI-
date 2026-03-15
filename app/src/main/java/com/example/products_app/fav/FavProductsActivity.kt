@@ -12,18 +12,21 @@ import com.example.products_app.data.local.ProductsDataBase
 import com.example.products_app.data.local.ProductsLocalDataSource
 import com.example.products_app.data.remote.ProductsRemoteDataSourceImpl
 import com.example.products_app.data.remote.RetrofitHelper
+import org.koin.androidx.compose.koinViewModel
 
 class FavProductsActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
        // enableEdgeToEdge()
         setContent {
-            val viewModel = ViewModelProvider(this, FavProductFactory(
-                ProductsRepositoryImpl.getInstance(
-                ProductsRemoteDataSourceImpl(RetrofitHelper.service),
-                ProductsLocalDataSource(ProductsDataBase.getInstance(this@FavProductsActivity).getProductsDao())
-            ))
-            )[FavProductsViewModel::class.java]
+//            val viewModel = ViewModelProvider(this, FavProductFactory(
+//                ProductsRepositoryImpl.getInstance(
+//                ProductsRemoteDataSourceImpl(RetrofitHelper.service),
+//                ProductsLocalDataSource(ProductsDataBase.getInstance(this@FavProductsActivity).getProductsDao())
+//            ))
+//            )[FavProductsViewModel::class.java]
+            val viewModel = koinViewModel<FavProductsViewModel>()
+
             FavProductsScreen(viewModel)
         }
     }

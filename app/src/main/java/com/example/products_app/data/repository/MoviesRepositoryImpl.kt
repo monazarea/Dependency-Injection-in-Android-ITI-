@@ -5,7 +5,7 @@ import com.example.products_app.data.model.Product
 import com.example.products_app.data.remote.RemoteDataSource
 
 
-class ProductsRepositoryImpl private constructor(
+class ProductsRepositoryImpl constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ): ProductsRepository {

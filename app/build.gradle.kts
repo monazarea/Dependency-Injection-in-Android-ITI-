@@ -4,7 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
     kotlin("plugin.serialization") version "2.1.10"
-    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -83,8 +82,11 @@ dependencies {
     implementation ("androidx.compose.runtime:runtime-livedata:$compose_version")
     implementation ("com.airbnb.android:lottie-compose:6.6.3")
 
-    implementation("com.google.dagger:hilt-android:2.51.1")
-    ksp("com.google.dagger:hilt-android-compiler:2.51.1")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation ("io.insert-koin:koin-android:4.0.2")
+    implementation ("io.insert-koin:koin-androidx-compose:4.0.2")
+    implementation ("io.insert-koin:koin-androidx-navigation:4.0.2")
+
+
+
 
 }
