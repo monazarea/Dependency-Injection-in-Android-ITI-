@@ -8,10 +8,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.products_app.data.model.Product
 import com.example.di_starterapplication.data.repository.ProductsRepository
+import com.example.products_app.di.DefaultDispatcher
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AllProductsViewModel(private val repository: ProductsRepository): ViewModel() {
+@HiltViewModel
+class AllProductsViewModel @Inject constructor(
+    private val repository: ProductsRepository,
+    @DefaultDispatcher val dispatcher: CoroutineDispatcher
+): ViewModel() {
+
     private val mutableMessage : MutableLiveData<String?> = MutableLiveData("")
     val message : LiveData<String?> = mutableMessage
 
@@ -57,8 +66,8 @@ class AllProductsViewModel(private val repository: ProductsRepository): ViewMode
     }
 
 }
-class AllProductFactory(private val repository: ProductsRepository): ViewModelProvider.Factory{
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return AllProductsViewModel(repository) as T
-    }
-}
+//class AllProductFactory(private val repository: ProductsRepository): ViewModelProvider.Factory{
+//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//        return AllProductsViewModel(repository) as T
+//    }
+//}

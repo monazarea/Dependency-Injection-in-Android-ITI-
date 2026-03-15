@@ -8,10 +8,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.products_app.data.model.Product
 import com.example.di_starterapplication.data.repository.ProductsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FavProductsViewModel (private val repository: ProductsRepository): ViewModel() {
+@HiltViewModel
+class FavProductsViewModel @Inject constructor(private val repository: ProductsRepository): ViewModel() {
     private val mutableMessage : MutableLiveData<String?> = MutableLiveData()
     val message : LiveData<String?> = mutableMessage
 
@@ -56,8 +59,8 @@ class FavProductsViewModel (private val repository: ProductsRepository): ViewMod
     }
 }
 
-class FavProductFactory(private val repository: ProductsRepository): ViewModelProvider.Factory{
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return FavProductsViewModel(repository) as T
-    }
-}
+//class FavProductFactory(private val repository: ProductsRepository): ViewModelProvider.Factory{
+//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//        return FavProductsViewModel(repository) as T
+//    }
+//}

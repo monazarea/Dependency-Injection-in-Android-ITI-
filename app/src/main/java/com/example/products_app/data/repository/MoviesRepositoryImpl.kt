@@ -3,9 +3,10 @@ package com.example.di_starterapplication.data.repository
 import com.example.products_app.data.local.LocalDataSource
 import com.example.products_app.data.model.Product
 import com.example.products_app.data.remote.RemoteDataSource
+import javax.inject.Inject
 
 
-class ProductsRepositoryImpl private constructor(
+class ProductsRepositoryImpl @Inject  constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ): ProductsRepository {

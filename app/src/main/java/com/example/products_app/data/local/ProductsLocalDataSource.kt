@@ -1,8 +1,9 @@
 package com.example.products_app.data.local
 
 import com.example.products_app.data.model.Product
+import javax.inject.Inject
 
-class ProductsLocalDataSource(private val dao: ProductsDao) : LocalDataSource {
+class ProductsLocalDataSource @Inject constructor(private val dao: ProductsDao) : LocalDataSource {
     override suspend fun getAllProducts(): List<Product> {
         return dao.getAllFavoriteProducts()
     }
